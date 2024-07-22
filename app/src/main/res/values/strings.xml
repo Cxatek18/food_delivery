@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Food Delivery</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="text_is_null_binding_first_fragment">FragmentFirstBinding is null</string>
+    <string name="text_is_null_binding_second_fragment">FragmentSecondBinding is null</string>
+    <string name="text_is_null_binding_third_fragment">FragmentThirdBinding is null</string>
+    <string name="text_is_null_binding_main_fragment">FragmentMainBinding is null</string>
+    <string name="text_is_null_binding_view_pager_opened_fragment">
+        FragmentViewPagerOpenedBinding is null
+    </string>
+    <string name="text_error_no_implements_interface">
+        Must implements interface NavigateHelper
+    </string>
+
+    <string name="text_key_shared_preferences_on_boarding">
+        onBoarding
+    </string>
+    <string name="text_extra_finished_on_boarding">
+        Finished
+    </string>
+
+
+    <string name="text_delicious_food">Вкусная еда</string>
+    <string name="text_desc_first_view_pager">Вкуснейшая и свежайшая еда, у Вас на столе</string>
+    <string name="text_btn_next">Далее</string>
+    <string name="text_fast_delivery">Быстрая доставка</string>
+    <string name="text_desc_second_view_pager">Доставим быстро, не успеете проголодаться</string>
+    <string name="text_convenient_payment">Удобная оплата</string>
+    <string name="text_desc_third_view_pager">Можете оплатить любым удобным способом</string>
 </resources>
