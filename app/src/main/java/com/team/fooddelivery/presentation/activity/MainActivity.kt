@@ -1,6 +1,7 @@
 package com.team.fooddelivery.presentation.activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -77,6 +78,12 @@ class MainActivity : AppCompatActivity(), NavigateHelper {
             navigateTo(MainFragment.newInstance())
         } else {
             navigateTo(ViewPagerOpened.newInstance())
+        }
+    }
+
+    companion object {
+        fun newInstance(context: SplashScreen): Intent {
+            return Intent(context, MainActivity::class.java)
         }
     }
 }
