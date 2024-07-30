@@ -12,8 +12,8 @@ import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.team.fooddelivery.R
 import com.team.fooddelivery.databinding.ActivityMainBinding
-import com.team.fooddelivery.presentation.fragments.MainFragment
 import com.team.fooddelivery.presentation.fragments.ViewPagerOpened
+import com.team.fooddelivery.presentation.fragments.user_auth.LoginFragment
 import com.team.fooddelivery.presentation.navigate.NavigateHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity(), NavigateHelper {
         navigatorHolder.removeNavigator()
         super.onPause()
     }
-
     // lifecycle
 
     override fun navigateTo(fragment: Fragment) {
@@ -75,7 +74,7 @@ class MainActivity : AppCompatActivity(), NavigateHelper {
 
     private fun checkingActivationIsOnBoarding() {
         if (onBoardingFinished()) {
-            navigateTo(MainFragment.newInstance())
+            navigateTo(LoginFragment.newInstance())
         } else {
             navigateTo(ViewPagerOpened.newInstance())
         }

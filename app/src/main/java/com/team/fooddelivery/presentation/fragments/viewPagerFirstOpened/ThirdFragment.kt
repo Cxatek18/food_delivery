@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.team.fooddelivery.R
 import com.team.fooddelivery.databinding.FragmentThirdBinding
-import com.team.fooddelivery.presentation.fragments.MainFragment
+import com.team.fooddelivery.presentation.fragments.user_auth.LoginFragment
 import com.team.fooddelivery.presentation.navigate.NavigateHelper
 
 class ThirdFragment : Fragment() {
@@ -43,7 +43,7 @@ class ThirdFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             btnNext.setOnClickListener {
-                navigateHelper.navigateTo(MainFragment.newInstance())
+                navigateHelper.navigateTo(LoginFragment.newInstance())
                 onBoardingFinished()
             }
         }
