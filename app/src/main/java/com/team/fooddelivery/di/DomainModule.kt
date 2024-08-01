@@ -6,8 +6,10 @@ import com.team.fooddelivery.data.repository.UserRepositoryImpl
 import com.team.fooddelivery.domain.repository.user.UserRepository
 import com.team.fooddelivery.domain.usecase.user.AuthEmailAndPasswordUseCase
 import com.team.fooddelivery.domain.usecase.user.GetCurrentUserUseCase
+import com.team.fooddelivery.domain.usecase.user.RestPasswordUseCase
 import com.team.fooddelivery.domain.usecase.user.SendVerifyCodeUseCase
 import com.team.fooddelivery.domain.usecase.user.SignInWithEmailAndPasswordUseCase
+import com.team.fooddelivery.domain.usecase.user.SignOutUseCase
 import com.team.fooddelivery.domain.usecase.user.VerifyCodeUseCase
 import dagger.Module
 import dagger.Provides
@@ -59,5 +61,19 @@ class DomainModule {
         firebaseDatabase: FirebaseDatabase
     ): UserRepository {
         return UserRepositoryImpl(auth, firebaseDatabase)
+    }
+
+    @Provides
+    fun provideRestPasswordUseCase(
+        repository: UserRepository
+    ): RestPasswordUseCase {
+        return RestPasswordUseCase(repository)
+    }
+
+    @Provides
+    fun provideSignOutUseCase(
+        repository: UserRepository
+    ): SignOutUseCase {
+        return SignOutUseCase(repository)
     }
 }

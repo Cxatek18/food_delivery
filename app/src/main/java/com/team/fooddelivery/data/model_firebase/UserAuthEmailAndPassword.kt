@@ -6,7 +6,6 @@ import com.team.fooddelivery.domain.entity.user.Order
 
 data class UserAuthEmailAndPassword(
     val email: String,
-    val password: String,
     val username: String?,
     val photoUser: String?,
     val address: String?,
@@ -14,5 +13,6 @@ data class UserAuthEmailAndPassword(
     val cart: List<Product>?,
     val cardData: Card?,
     val phoneUser: String,
-    val isRegisterPhone: Boolean
+    val isRegisterPhone: Boolean,
+    val isAdmin: Boolean = false
 )

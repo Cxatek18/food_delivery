@@ -14,3 +14,11 @@ fun listeningOnBackPressed(
         navigateHelper.navigateTo(fragmentTo)
     }
 }
+
+fun onBackPressedExit(
+    requireActivity: FragmentActivity,
+) {
+    requireActivity.onBackPressedDispatcher.addCallback {
+        requireActivity.finish()
+    }
+}
