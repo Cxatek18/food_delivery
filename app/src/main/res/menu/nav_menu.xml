@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/home_tool_bar_img"
+            android:title="@string/text_go_to_main_nav_item" />
+
+        <item
+            android:id="@+id/order"
+            android:icon="@drawable/order_tool_bar_img"
+            android:title="@string/text_go_to_order_nav_item" />
+
+        <item
+            android:id="@+id/cart"
+            android:icon="@drawable/cart_tool_bar_img"
+            android:title="@string/text_go_to_cart_nav_item" />
+
+        <item
+            android:id="@+id/favourite"
+            android:icon="@drawable/favourite_tool_bar_img"
+            android:title="@string/text_go_to_favourite_nav_item" />
+
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/user_tool_bar_img"
+            android:title="@string/text_go_to_profile_nav_item" />
+    </group>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/help"
+                android:icon="@drawable/help_tool_bar_img"
+                android:title="@string/text_go_to_help_nav_item" />
+
+            <item
+                android:id="@+id/exit"
+                android:icon="@drawable/exit_tool_bar_img"
+                android:title="@string/text_exit_nav_item" />
+        </menu>
+    </item>
+</menu>

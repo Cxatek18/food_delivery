@@ -15,6 +15,8 @@ import com.team.fooddelivery.domain.entity.user.state.ResponseGetCurrentUser
 import com.team.fooddelivery.domain.entity.user.state.ResponseUserAuthEmailAndPassword
 import com.team.fooddelivery.presentation.fragments.MainFragment
 import com.team.fooddelivery.presentation.navigate.NavigateHelper
+import com.team.fooddelivery.presentation.utils.onBackPressedExit
+import com.team.fooddelivery.presentation.utils.setGoneVisibleNavMenu
 import com.team.fooddelivery.presentation.viewModels.user.ViewModelLogin
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -53,10 +55,13 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getCurrentUser()
+        setGoneVisibleNavMenu(requireActivity())
+        onBackPressedExit(requireActivity())
         onClickBtnRegister()
         onClickRegisterPhone()
         loginUser()
         observeViewModel()
+        onClickForgotPassword()
     }
 
     override fun onDestroyView() {
@@ -127,6 +132,12 @@ class LoginFragment : Fragment() {
                     ).show()
                 }
             }
+        }
+    }
+
+    private fun onClickForgotPassword() {
+        binding.textForgotPassword.setOnClickListener {
+            navigateHelper.navigateTo(RestPasswordFragment.newInstance())
         }
     }
 

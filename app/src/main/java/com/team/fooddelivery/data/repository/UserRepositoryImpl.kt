@@ -12,6 +12,8 @@ import com.team.fooddelivery.domain.entity.user.Card
 import com.team.fooddelivery.domain.entity.user.state.CodePhoneResult
 import com.team.fooddelivery.domain.entity.user.state.ResponseGetCurrentUser
 import com.team.fooddelivery.domain.entity.user.state.ResponseUserAuthEmailAndPassword
+import com.team.fooddelivery.domain.entity.user.state.ResponseUserResetPassword
+import com.team.fooddelivery.domain.entity.user.state.ResponseUserSignOut
 import com.team.fooddelivery.domain.entity.user.state.UserFirebaseResult
 import com.team.fooddelivery.domain.repository.user.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -50,7 +52,6 @@ class UserRepositoryImpl(
                 saveUserInFirebaseBase(
                     userId = result.user!!.uid,
                     email = email,
-                    password = password
                 )
                 emit(UserFirebaseResult.UserIsRegister)
             }
@@ -133,14 +134,12 @@ class UserRepositoryImpl(
     private fun saveUserInFirebaseBase(
         userId: String,
         email: String = "",
-        password: String = "",
         phoneUser: String = "",
         isRegisterPhone: Boolean = false
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             val user = UserAuthEmailAndPassword(
                 email = email,
-                password = password,
                 username = "",
                 photoUser = "",
                 address = "",
@@ -172,6 +171,24 @@ class UserRepositoryImpl(
             }
         } catch (e: Exception) {
             emit(ResponseUserAuthEmailAndPassword.Error)
+        }
+    }
+
+    override fun restPassword(email: String): Flow<ResponseUserResetPassword> = flow {
+        try {
+            auth.sendPasswordResetEmail(email).await()
+            emit(ResponseUserResetPassword.Success)
+        } catch (e: Exception) {
+            emit(ResponseUserResetPassword.Error)
+        }
+    }
+
+    override fun signOut(): Flow<ResponseUserSignOut> = flow {
+        try {
+            emit(ResponseUserSignOut.Success)
+            auth.signOut()
+        } catch (e: Exception) {
+            emit(ResponseUserSignOut.Error)
         }
     }
 }
