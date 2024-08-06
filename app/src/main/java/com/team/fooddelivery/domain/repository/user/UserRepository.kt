@@ -2,6 +2,7 @@ package com.team.fooddelivery.domain.repository.user
 
 import com.team.fooddelivery.domain.entity.user.state.CodePhoneResult
 import com.team.fooddelivery.domain.entity.user.state.ResponseGetCurrentUser
+import com.team.fooddelivery.domain.entity.user.state.ResponseGetUserInfo
 import com.team.fooddelivery.domain.entity.user.state.ResponseUserAuthEmailAndPassword
 import com.team.fooddelivery.domain.entity.user.state.ResponseUserResetPassword
 import com.team.fooddelivery.domain.entity.user.state.ResponseUserSignOut
@@ -37,4 +38,6 @@ interface UserRepository {
     ): Flow<ResponseUserResetPassword>
 
     fun signOut(): Flow<ResponseUserSignOut>
+
+    fun getUserInfo(userId: String): Flow<ResponseGetUserInfo>
 }

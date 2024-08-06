@@ -10,6 +10,7 @@ import com.team.fooddelivery.databinding.FragmentViewPagerOpenedBinding
 import com.team.fooddelivery.presentation.fragments.viewPagerFirstOpened.FirstFragment
 import com.team.fooddelivery.presentation.fragments.viewPagerFirstOpened.SecondFragment
 import com.team.fooddelivery.presentation.fragments.viewPagerFirstOpened.ThirdFragment
+import com.team.fooddelivery.presentation.utils.setGoneVisibleNavMenu
 import com.team.fooddelivery.presentation.viewPager.ViewPagerAdapter
 
 class ViewPagerOpened : Fragment() {
@@ -30,7 +31,7 @@ class ViewPagerOpened : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentViewPagerOpenedBinding.inflate(
             inflater, container, false
         )
@@ -39,6 +40,7 @@ class ViewPagerOpened : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setGoneVisibleNavMenu(requireActivity())
         val fragmentList = arrayListOf<Fragment>(
             FirstFragment(),
             SecondFragment(),

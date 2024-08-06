@@ -6,11 +6,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
+import com.team.fooddelivery.data.mapper.mapToUser
 import com.team.fooddelivery.data.model_firebase.UserAuthEmailAndPassword
 import com.team.fooddelivery.domain.entity.user.Card
 import com.team.fooddelivery.domain.entity.user.state.CodePhoneResult
 import com.team.fooddelivery.domain.entity.user.state.ResponseGetCurrentUser
+import com.team.fooddelivery.domain.entity.user.state.ResponseGetUserInfo
 import com.team.fooddelivery.domain.entity.user.state.ResponseUserAuthEmailAndPassword
 import com.team.fooddelivery.domain.entity.user.state.ResponseUserResetPassword
 import com.team.fooddelivery.domain.entity.user.state.ResponseUserSignOut
@@ -20,6 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -31,6 +38,8 @@ class UserRepositoryImpl(
     private val auth: FirebaseAuth,
     private val firebaseDatabase: FirebaseDatabase
 ) : UserRepository {
+
+    private val userInfoFlow = MutableStateFlow<ResponseGetUserInfo>(ResponseGetUserInfo.Initial)
 
     override fun getCurrentUser(): Flow<ResponseGetCurrentUser?> = flow {
         if (auth.currentUser == null) {
@@ -190,5 +199,27 @@ class UserRepositoryImpl(
         } catch (e: Exception) {
             emit(ResponseUserSignOut.Error)
         }
+    }
+
+    override fun getUserInfo(userId: String): Flow<ResponseGetUserInfo> = flow {
+        val userRef = firebaseDatabase.reference.child("Users").child(userId)
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userObj = snapshot.getValue<UserAuthEmailAndPassword>()
+                if (userObj != null) {
+                    userInfoFlow.value = ResponseGetUserInfo.Success(
+                        userObj.mapToUser()
+                    )
+                } else {
+                    userInfoFlow.value = ResponseGetUserInfo.Error
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                userInfoFlow.value = ResponseGetUserInfo.Error
+            }
+        }
+        userRef.addValueEventListener(listener)
+        userInfoFlow.collect { emit(it) }
     }
 }

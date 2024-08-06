@@ -1,16 +1,20 @@
 package com.team.fooddelivery.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.team.fooddelivery.R
 import com.team.fooddelivery.databinding.FragmentMainBinding
+import com.team.fooddelivery.domain.entity.user.User
 import com.team.fooddelivery.domain.entity.user.state.ResponseGetCurrentUser
+import com.team.fooddelivery.domain.entity.user.state.ResponseGetUserInfo
 import com.team.fooddelivery.presentation.fragments.user_auth.LoginFragment
 import com.team.fooddelivery.presentation.navigate.NavigateHelper
 import com.team.fooddelivery.presentation.utils.onBackPressedExit
@@ -74,12 +78,39 @@ class MainFragment : Fragment() {
                         }
 
                         ResponseGetCurrentUser.Initial -> {}
-                        is ResponseGetCurrentUser.UserSuccess -> {}
-                        null -> {
-                            navigateHelper.navigateTo(LoginFragment.newInstance())
+                        is ResponseGetCurrentUser.UserSuccess -> {
+                            viewModel.getUserInfo(userId = result.user?.uid ?: "")
+                        }
+
+                        null -> {}
+                    }
+                }
+        }
+
+        lifecycleScope.launch {
+            viewModel.firebaseUserInfo.flowWithLifecycle(lifecycle)
+                .collect { result ->
+                    when (result) {
+                        ResponseGetUserInfo.Error -> {
+                            Log.d("MainFragment", "No User")
+                        }
+
+                        ResponseGetUserInfo.Initial -> {}
+                        is ResponseGetUserInfo.Success -> {
+                            setUserInfoInHeaderMenu(result.userObj)
                         }
                     }
                 }
+        }
+    }
+
+    private fun setUserInfoInHeaderMenu(user: User) {
+        val userInfoInFragment = requireActivity()
+            .findViewById<AppCompatTextView>(R.id.userInfo)
+        if (user.email.isNotEmpty()) {
+            userInfoInFragment.text = user.email
+        } else {
+            userInfoInFragment.text = user.phoneUser
         }
     }
 

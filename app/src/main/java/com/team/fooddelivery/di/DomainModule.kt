@@ -6,6 +6,7 @@ import com.team.fooddelivery.data.repository.UserRepositoryImpl
 import com.team.fooddelivery.domain.repository.user.UserRepository
 import com.team.fooddelivery.domain.usecase.user.AuthEmailAndPasswordUseCase
 import com.team.fooddelivery.domain.usecase.user.GetCurrentUserUseCase
+import com.team.fooddelivery.domain.usecase.user.GetUserInfoUseCase
 import com.team.fooddelivery.domain.usecase.user.RestPasswordUseCase
 import com.team.fooddelivery.domain.usecase.user.SendVerifyCodeUseCase
 import com.team.fooddelivery.domain.usecase.user.SignInWithEmailAndPasswordUseCase
@@ -75,5 +76,12 @@ class DomainModule {
         repository: UserRepository
     ): SignOutUseCase {
         return SignOutUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetUserInfoUseCase(
+        repository: UserRepository
+    ): GetUserInfoUseCase {
+        return GetUserInfoUseCase(repository)
     }
 }
